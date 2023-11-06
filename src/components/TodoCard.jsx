@@ -7,7 +7,7 @@ import { FilterTodos } from "./FilterTodos";
 
 export const TodoCard = () => {
   const [todos, setTodos] = useState([]);
-  const [navigation, setNavigation] = useState("");
+  const [filter, setFilter] = useState("All");
 
   const addTodo = (todo) => {
     setTodos([
@@ -57,26 +57,78 @@ export const TodoCard = () => {
     setTodos([]);
   };
 
+  const showByFilter = (filter, todos) => {
+    if (filter === "All") {
+      return (
+        <div>
+          {todos.map((todo) =>
+            todo.isEditing ? (
+              <EditFormTodo key={todo.id} editTodo={editTask} task={todo} />
+            ) : (
+              <ListTodo
+                key={todo.id}
+                task={todo}
+                markCompleteTodo={markCompleteTodo}
+                editTodo={editTodo}
+                deleteTodo={deleteTodo}
+              />
+            )
+          )}
+        </div>
+      );
+    } else if (filter === "Done") {
+      return (
+        <div>
+          {todos
+            .filter((todo) => todo.completed === true)
+            .map((todo) =>
+              todo.isEditing ? (
+                <EditFormTodo key={todo.id} editTodo={editTask} task={todo} />
+              ) : (
+                <ListTodo
+                  key={todo.id}
+                  task={todo}
+                  markCompleteTodo={markCompleteTodo}
+                  editTodo={editTodo}
+                  deleteTodo={deleteTodo}
+                />
+              )
+            )}
+        </div>
+      );
+    } else if (filter === "Pending") {
+      return (
+        <div>
+          {todos
+            .filter((todo) => todo.completed === false)
+            .map((todo) =>
+              todo.isEditing ? (
+                <EditFormTodo key={todo.id} editTodo={editTask} task={todo} />
+              ) : (
+                <ListTodo
+                  key={todo.id}
+                  task={todo}
+                  markCompleteTodo={markCompleteTodo}
+                  editTodo={editTodo}
+                  deleteTodo={deleteTodo}
+                />
+              )
+            )}
+        </div>
+      );
+    }
+  };
+
   return (
     <div className="max-w-lg border p-5 m-auto mt-9 border-slate-200 rounded-xl shadow-md">
       <h3 className="text-slate-700 mb-3 text-center text-xl font-semibold">
         Todo List
       </h3>
       <FormTodo addTodo={addTodo} />
-      {todos.length >= 1 ? <FilterTodos deleteAllTodos={deleteAllTodo}/> : null}
-      {todos.map((todo) =>
-        todo.isEditing ? (
-          <EditFormTodo key={todo.id} editTodo={editTask} task={todo} />
-        ) : (
-          <ListTodo
-            key={todo.id}
-            task={todo}
-            markCompleteTodo={markCompleteTodo}
-            editTodo={editTodo}
-            deleteTodo={deleteTodo}
-          />
-        )
-      )}
+      {todos.length >= 1 ? (
+        <FilterTodos deleteAllTodos={deleteAllTodo} filter={setFilter} />
+      ) : null}
+      {showByFilter(filter, todos)}
     </div>
   );
 };

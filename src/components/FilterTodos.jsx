@@ -1,21 +1,54 @@
-export const FilterTodos = ({ deleteAllTodos }) => {
+import { useState } from "react";
+
+export const FilterTodos = ({ deleteAllTodos, filter }) => {
+  const [navigations, setNavigations] = useState([
+    {
+      titleNav: "All",
+      isActive: true,
+    },
+    {
+      titleNav: "Done",
+      isActive: false,
+    },
+    {
+      titleNav: "Pending",
+      isActive: false,
+    },
+  ]);
+
+  const changeNavigation = (e, titleNav) => {
+    e.preventDefault();
+    setNavigations(
+      navigations.map((nav) =>
+        nav.titleNav === titleNav
+          ? { ...nav, isActive: true }
+          : { ...nav, isActive: false }
+      )
+    );
+    filter(titleNav);
+  };
+
   return (
-    <nav className="mb-2 p-1 flex list-none">
-      <li>
-        <a href="" className="block pr-5 underline text-blue-700">
-          All
-        </a>
-      </li>
-      <li>
-        <a href="" className="block pr-5 ">
-          Done
-        </a>
-      </li>
-      <li>
-        <a href="" className="block ">
-          Pending
-        </a>
-      </li>
+    <div className="mb-2 p-1 flex list-none">
+      {navigations.map((nav) => {
+        return (
+          <div key={nav.titleNav}>
+            <li>
+              <a
+                href=""
+                className={
+                  nav.isActive
+                    ? "block mr-5 border-b-2 border-blue-700 text-blue-700"
+                    : "block mr-5"
+                }
+                onClick={(e) => changeNavigation(e, nav.titleNav)}
+              >
+                {nav.titleNav}
+              </a>
+            </li>
+          </div>
+        );
+      })}
       <li className="flex-grow"></li>
       <button
         onClick={() => deleteAllTodos()}
@@ -24,6 +57,6 @@ export const FilterTodos = ({ deleteAllTodos }) => {
         Clear All
       </button>
       <hr />
-    </nav>
+    </div>
   );
 };
