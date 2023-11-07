@@ -58,10 +58,19 @@ export const TodoCard = () => {
   };
 
   const showByFilter = (filter, todos) => {
+    let dataTodos
     if (filter === "All") {
-      return (
-        <div>
-          {todos.map((todo) =>
+      dataTodos = todos;
+    } else if (filter === "Done") {
+      dataTodos = todos.filter((todo) => todo.completed === true);
+    } else if (filter === "Pending") {
+      dataTodos = todos.filter((todo) => todo.completed === false);
+    }
+
+    return (
+      <div>
+        {dataTodos
+          .map((todo) =>
             todo.isEditing ? (
               <EditFormTodo key={todo.id} editTodo={editTask} task={todo} />
             ) : (
@@ -74,49 +83,8 @@ export const TodoCard = () => {
               />
             )
           )}
-        </div>
-      );
-    } else if (filter === "Done") {
-      return (
-        <div>
-          {todos
-            .filter((todo) => todo.completed === true)
-            .map((todo) =>
-              todo.isEditing ? (
-                <EditFormTodo key={todo.id} editTodo={editTask} task={todo} />
-              ) : (
-                <ListTodo
-                  key={todo.id}
-                  task={todo}
-                  markCompleteTodo={markCompleteTodo}
-                  editTodo={editTodo}
-                  deleteTodo={deleteTodo}
-                />
-              )
-            )}
-        </div>
-      );
-    } else if (filter === "Pending") {
-      return (
-        <div>
-          {todos
-            .filter((todo) => todo.completed === false)
-            .map((todo) =>
-              todo.isEditing ? (
-                <EditFormTodo key={todo.id} editTodo={editTask} task={todo} />
-              ) : (
-                <ListTodo
-                  key={todo.id}
-                  task={todo}
-                  markCompleteTodo={markCompleteTodo}
-                  editTodo={editTodo}
-                  deleteTodo={deleteTodo}
-                />
-              )
-            )}
-        </div>
-      );
-    }
+      </div>
+    );
   };
 
   return (
