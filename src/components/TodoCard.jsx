@@ -58,7 +58,7 @@ export const TodoCard = () => {
   };
 
   const showByFilter = (filter, todos) => {
-    let dataTodos
+    let dataTodos;
     if (filter === "All") {
       dataTodos = todos;
     } else if (filter === "Done") {
@@ -69,26 +69,25 @@ export const TodoCard = () => {
 
     return (
       <div>
-        {dataTodos
-          .map((todo) =>
-            todo.isEditing ? (
-              <EditFormTodo key={todo.id} editTodo={editTask} task={todo} />
-            ) : (
-              <ListTodo
-                key={todo.id}
-                task={todo}
-                markCompleteTodo={markCompleteTodo}
-                editTodo={editTodo}
-                deleteTodo={deleteTodo}
-              />
-            )
-          )}
+        {dataTodos.map((todo) =>
+          todo.isEditing ? (
+            <EditFormTodo key={todo.id} editTodo={editTask} task={todo} />
+          ) : (
+            <ListTodo
+              key={todo.id}
+              task={todo}
+              markCompleteTodo={markCompleteTodo}
+              editTodo={editTodo}
+              deleteTodo={deleteTodo}
+            />
+          )
+        )}
       </div>
     );
   };
 
   return (
-    <div className="max-w-lg border p-5 m-auto mt-9 border-slate-200 rounded-xl shadow-md">
+    <div className="max-w-lg mt-5 m-auto px-3 md:border md:rounded-xl md:shadow-md md-border-slate-200">
       <h3 className="text-slate-700 mb-3 text-center text-xl font-semibold">
         Todo List
       </h3>

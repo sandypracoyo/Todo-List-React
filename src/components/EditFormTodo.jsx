@@ -11,23 +11,24 @@ export const EditFormTodo = ({ editTodo, task }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="mb-5">
-      <label htmlFor="todo">
-        <input
-          type="text"
-          className="px-3 py-2 rounded-lg w-3/4 border shadow placeholder:text-slate-300 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
-          placeholder={task.task}
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          id="todo"
-        />
-        <button
-          type="submit"
-          className="bg-sky-500 rounded-lg px-5 py-2 ml-2 text-slate-100 shadow hover:bg-sky-600 "
-        >
-          Add Todo
-        </button>
-      </label>
+    <form
+      onSubmit={handleSubmit}
+      className="flex flex-row md:justify-center items-center gap-2 mb-4"
+    >
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        id="todo"
+        placeholder="Add Your Todo.."
+        className="px-3 py-2 w-full rounded-lg border shadow placeholder:text-slate-300 focus:outline-none focus:border-sky-500 focus:ring-1 focus:ring-sky-500"
+      />
+      <button
+        type="submit"
+        className="bg-blue-600 rounded-lg text-lg text-white px-3 py-2 hover:bg-blue-500 transition-all"
+      >
+        Edit
+      </button>
     </form>
   );
 };
